@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Đăng Ký</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        .form-container {
+            border: 2px solid #000000; 
+            padding: 20px; 
+            background-color: #fff; 
+            max-width: 400px;
+            margin: auto;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1 style="text-align:center;">Form Đăng Ký</h1>
+        <form id="registrationForm">
+            <label for="ho">Họ:</label><br>
+            <input type="text" id="ho" name="ho" required><br><br>
+
+            <label for="ten">Tên:</label><br>
+            <input type="text" id="ten" name="ten" required><br><br>
+
+            <label for="ngaysinh">Ngày sinh:</label><br>
+            <input type="date" id="ngaysinh" name="ngaysinh" required><br><br>
+
+            <label>Giới tính:</label><br>
+            <input type="radio" id="nam" name="gioitinh" value="nam" required>
+            <label for="nam">Nam</label><br>
+            <input type="radio" id="nu" name="gioitinh" value="nu">
+            <label for="nu">Nữ</label><br><br>
+
+            <label for="sodienthoai">Số điện thoại:</label><br>
+            <input type="tel" id="sodienthoai" name="sodienthoai" required pattern="\d{10}" ><br>
+            <small class="error"></small><br><br>
+
+            <label>Sở thích:</label><br>
+            <input type="checkbox" id="docSach" name="soThich" value="docSach">
+            <label for="docSach">Đọc sách</label><br>
+            <input type="checkbox" id="xemPhim" name="soThich" value="xemPhim">
+            <label for="xemPhim">Xem phim</label><br>
+            <input type="checkbox" id="ngheNhac" name="soThich" value="ngheNhac">
+            <label for="ngheNhac">Nghe nhạc</label><br><br>
+
+            <label for="khac">Khác:</label><br>
+            <input type="text" id="khac" name="khac"><br><br>
+
+            <span class="error" id="errorMessage"></span><br><br>
+            <input type="submit" value="Đăng Ký">
+            <input type="reset" value="Reset">
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('registrationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const ho = document.getElementById('ho').value.trim();
+            const ten = document.getElementById('ten').value.trim();
+            const ngaysinh = document.getElementById('ngaysinh').value;
+            const gioitinh = document.querySelector('input[name="gioitinh"]:checked');
+            const sodienthoai = document.getElementById('sodienthoai').value.trim();
+            const soThich = document.querySelectorAll('input[name="soThich"]:checked');
+
+            let errorMessage = '';
+
+            if (!ho) {
+                errorMessage += 'Vui lòng nhập họ.<br>';
+            }
+
+            if (!ten) {
+                errorMessage += 'Vui lòng nhập tên.<br>';
+            }
+
+            if (!ngaysinh) {
+                errorMessage += 'Ngày sinh là bắt buộc.<br>';
+            }
+
+            if (!gioitinh) {
+                errorMessage += 'Bạn cần chọn giới tính.<br>';
+            }
+
+            if (!/^\d{10}$/.test(sodienthoai)) {
+                errorMessage += 'Số điện thoại phải là 10 chữ số.<br>';
+            }
+
+            if (errorMessage) {
+                document.getElementById('errorMessage').innerHTML = errorMessage;
+            } else {
+                document.getElementById('errorMessage').innerHTML = '';
+                alert('Đăng ký thành công!');
+                this.submit();
+            }
+        });
+    </script>
+</body>
+</html>
